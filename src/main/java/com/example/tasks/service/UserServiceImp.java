@@ -2,6 +2,7 @@ package com.example.tasks.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.tasks.dto.UserDTO;
@@ -12,9 +13,11 @@ import com.example.tasks.repository.UserRepository;
 
 @Service
 public class UserServiceImp implements UserService {
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
-    public UserServiceImp(UserRepository userRepository) {
+    public UserServiceImp(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -28,6 +31,7 @@ public class UserServiceImp implements UserService {
         return UserMapper.toDTO(user);}
     @Override
     public UserDTO createUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         return UserMapper.toDTO(savedUser);
     }

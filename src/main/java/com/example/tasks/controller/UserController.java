@@ -61,4 +61,13 @@ public class UserController {
         return "User with id " + id + " has been deleted successfully.";
     }
     
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User newUser, BindingResult binding){
+        if (binding.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(binding.getAllErrors());            
+        }
+        UserDTO savedUser = userServiceImp.createUser(newUser);
+        return ResponseEntity.ok(savedUser);
+    }
 }

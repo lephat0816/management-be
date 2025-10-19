@@ -10,7 +10,7 @@ public class UserMapper {
         if (user == null) {
             return null;
         }
-        return new UserDTO(user.getId(), user.getUsername(), user.getName(), user.getEmail());
+        return new UserDTO(user.getId(), user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
     }
     public static List<UserDTO> toDTOList(List<User> users) {
         return users.stream().map(UserMapper::toDTO).toList();

@@ -1,6 +1,8 @@
 package com.example.tasks.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +24,7 @@ public class User {
     
     @NotBlank(message = "password is mandatory")
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User(String username, String name, String email, String password, Role role) {
